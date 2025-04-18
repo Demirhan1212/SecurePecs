@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "90920770766",
+    "project_id": "myfirstapp-d5069",
+    "storage_bucket": "myfirstapp-d5069.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90920770766:android:8652c7404c710a66d1049f",
+        "android_client_info": {
+          "package_name": "com.cybersecapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACl1_AuLumRbx5e8BmEPVEuroEEmAnDTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
