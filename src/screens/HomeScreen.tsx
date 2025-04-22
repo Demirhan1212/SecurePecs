@@ -4,15 +4,16 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  LayoutAnimation,
-  Platform,
-  UIManager,
   Image,
   ScrollView,
+  Platform,
+  UIManager,
+  LayoutAnimation,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { HomeStackParamList } from '../navigation/HomeStack';
+import { normalize } from '../utils/normalize';
 
 if (Platform.OS === 'android') {
   UIManager.setLayoutAnimationEnabledExperimental &&
@@ -21,82 +22,97 @@ if (Platform.OS === 'android') {
 
 const HomeScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
-  const [userType, setUserType] = useState<'personal' | 'corporate' | null>(null);
-  const [levelVisible, setLevelVisible] = useState(false);
+  const [userType, setUserType] = useState<'personal' | 'corporate'>('personal');
 
   const handleUserTypeSelect = (type: 'personal' | 'corporate') => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setUserType(type);
-    setLevelVisible(true);
   };
 
-  const handleLevelSelect = (level: 'basic' | 'intermediate' | 'advanced') => {
-    const screenName = `${userType}_${level}` as keyof HomeStackParamList;
-    navigation.navigate(screenName);
+  const handleLevelSelect = (level: 'beginner' | 'intermediate' | 'advanced') => {
+    const levelKey = `${userType}_${level}`;
+    navigation.navigate('MainDashboard', { level: levelKey });
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.heading}>Welcome to CyberSecApp 🚀</Text>
-      <Text style={styles.subheading}>Please select your user type</Text>
+    <ScrollView contentContainerStyle={[styles.container, { paddingBottom: normalize(120) }]}>
+      <Text style={styles.topLabel}>Home</Text>
 
-      <View style={styles.typeButtonRow}>
+      <Text style={styles.title}>
+        Welcome to{'\n'}<Text style={styles.bold}>SecurePECS</Text>
+      </Text>
+      <Text style={styles.description}>
+        Learn how to protect yourself and your company from cyber threats.
+      </Text>
+
+      <View style={styles.toggleButtons}>
         <TouchableOpacity
-          style={styles.imageButton}
+          style={[
+            styles.toggleButton,
+            userType === 'personal' && styles.activeButton,
+          ]}
           onPress={() => handleUserTypeSelect('personal')}
         >
-          <Image
-            source={require('../assets/personal.png')}
-            style={styles.imageIcon}
-          />
+          <Text
+            style={[
+              styles.toggleButtonText,
+              userType === 'personal' && styles.activeButtonText,
+            ]}
+          >
+            Personal
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.imageButton}
+          style={[
+            styles.toggleButton,
+            userType === 'corporate' && styles.activeButton,
+          ]}
           onPress={() => handleUserTypeSelect('corporate')}
         >
-          <Image
-            source={require('../assets/corporate.png')}
-            style={styles.imageIcon}
-          />
+          <Text
+            style={[
+              styles.toggleButtonText,
+              userType === 'corporate' && styles.activeButtonText,
+            ]}
+          >
+            Corporate
+          </Text>
         </TouchableOpacity>
       </View>
 
-      {levelVisible && (
-        <View style={styles.levelSection}>
-          <Text style={styles.subheading}>Now choose your level</Text>
+      <Text style={styles.chooseLabel}>Choose your level</Text>
 
-          <TouchableOpacity
-            style={styles.imageButton}
-            onPress={() => handleLevelSelect('basic')}
-          >
-            <Image
-              source={require('../assets/basic.png')}
-              style={styles.imageIcon}
-            />
-          </TouchableOpacity>
+      <View style={styles.levelList}>
+        <TouchableOpacity style={styles.levelItem} onPress={() => handleLevelSelect('beginner')}>
+          <View style={styles.checkbox} />
+          <View>
+            <Text style={styles.levelTitle}>Beginner</Text>
+            <Text style={styles.levelDesc}>For those new to cybersecurity</Text>
+          </View>
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.imageButton}
-            onPress={() => handleLevelSelect('intermediate')}
-          >
-            <Image
-              source={require('../assets/intermediate.png')}
-              style={styles.imageIcon}
-            />
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.levelItem} onPress={() => handleLevelSelect('intermediate')}>
+          <View style={styles.checkbox} />
+          <View>
+            <Text style={styles.levelTitle}>Intermediate</Text>
+            <Text style={styles.levelDesc}>For those with some experience</Text>
+          </View>
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.imageButton}
-            onPress={() => handleLevelSelect('advanced')}
-          >
-            <Image
-              source={require('../assets/advanced.png')}
-              style={styles.imageIcon}
-            />
-          </TouchableOpacity>
-        </View>
-      )}
+        <TouchableOpacity style={styles.levelItem} onPress={() => handleLevelSelect('advanced')}>
+          <View style={styles.checkbox} />
+          <View>
+            <Text style={styles.levelTitle}>Advanced</Text>
+            <Text style={styles.levelDesc}>For those looking for a challenge</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+
+      <Image
+        source={require('../assets/home_screen.png')}
+        style={styles.bottomImage}
+      />
     </ScrollView>
   );
 };
@@ -106,42 +122,92 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
+    padding: normalize(24),
     backgroundColor: '#0a0a0a',
-    padding: 24,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  heading: {
-    fontSize: 26,
-    color: '#ffcc00',
-    fontWeight: '700',
-    marginBottom: 10,
-  },
-  subheading: {
-    fontSize: 16,
-    color: '#ccc',
-    marginBottom: 16,
+  topLabel: {
+    color: '#888',
+    fontSize: normalize(14),
     textAlign: 'center',
+    marginBottom: normalize(10),
   },
-  typeButtonRow: {
+  title: {
+    fontSize: normalize(26),
+    fontWeight: '400',
+    color: '#fff',
+    textAlign: 'left',
+    marginBottom: normalize(10),
+  },
+  bold: {
+    fontWeight: '700',
+  },
+  description: {
+    color: '#aaa',
+    fontSize: normalize(14),
+    marginBottom: normalize(20),
+  },
+  toggleButtons: {
     flexDirection: 'row',
-    gap: 20, // 👈 butonlar daha yakın
-    marginBottom: 24,
+    gap: normalize(10),
+    marginBottom: normalize(24),
   },
-  imageButton: {
-    padding: 4,
+  toggleButton: {
+    flex: 1,
+    paddingVertical: normalize(12),
+    backgroundColor: '#1c1c1e',
+    borderRadius: normalize(10),
     alignItems: 'center',
-    width: 140,
   },
-  imageIcon: {
-    width: 200, // 👈 daha büyük ikon
-    height: 160,
-    resizeMode: 'contain',
+  activeButton: {
+    backgroundColor: '#ffcc00',
   },
-  levelSection: {
+  toggleButtonText: {
+    color: '#ccc',
+    fontWeight: '600',
+    fontSize: normalize(14),
+  },
+  activeButtonText: {
+    color: '#fff',
+  },
+  chooseLabel: {
+    color: '#fff',
+    fontSize: normalize(16),
+    marginBottom: normalize(16),
+    fontWeight: '600',
+  },
+  levelList: {
+    marginBottom: normalize(30),
+    gap: normalize(12),
+  },
+  levelItem: {
+    flexDirection: 'row',
+    gap: normalize(12),
+    alignItems: 'center',
+    padding: normalize(12),
+    borderRadius: normalize(10),
+    backgroundColor: '#1c1c1e',
+  },
+  checkbox: {
+    width: normalize(24),
+    height: normalize(24),
+    borderRadius: normalize(12),
+    borderWidth: 2,
+    borderColor: '#888',
+  },
+  levelTitle: {
+    fontSize: normalize(16),
+    color: '#fff',
+    fontWeight: '600',
+  },
+  levelDesc: {
+    fontSize: normalize(13),
+    color: '#aaa',
+  },
+  bottomImage: {
     width: '100%',
-    alignItems: 'center',
-    gap: 0, // 👈 seviye arası daha yakın
+    height: normalize(180),
+    borderRadius: normalize(12),
+    resizeMode: 'cover',
+    marginTop: normalize(10),
   },
 });
-

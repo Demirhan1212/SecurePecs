@@ -7,7 +7,6 @@ import {
   Alert,
   TouchableOpacity,
   ScrollView,
-  Image,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -15,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/AppNavigator';
 import BackButton from '../components/BackButton';
+import { normalize } from '../utils/normalize';
 
 const RegisterScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -25,11 +25,9 @@ const RegisterScreen = () => {
 
   const handleRegister = async () => {
     try {
-      // 🔐 Firebase Authentication
       const userCredential = await auth().createUserWithEmailAndPassword(email, password);
       const { uid } = userCredential.user;
 
-      // 📝 Firestore'a kullanıcı bilgisi ekleme
       await firestore().collection('users').doc(uid).set({
         firstName,
         lastName,
@@ -37,58 +35,47 @@ const RegisterScreen = () => {
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
 
-      Alert.alert('CyberSec 🎯', 'Kayıt başarılı!');
+      Alert.alert('SecurePECS 🎯', 'Registration successful!');
       navigation.navigate('Login');
     } catch (error: any) {
-      Alert.alert('Kayıt Hatası', error.message);
+      Alert.alert('Registration Failed', error.message);
     }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
       <BackButton />
-      <View style={styles.logoContainer}>
-        <Image
-          source={require('../assets/logo.png')}
-          style={styles.logo}
-          resizeMode="contain"
-        />
-      </View>
 
-      <View style={styles.formContainer}>
-        <Text style={styles.title}>Create an account</Text>
-        <Text style={styles.subtitle}>Enter your email to sign up for this app</Text>
+      <View style={{ paddingTop: normalize(80) }}>
+        <Text style={styles.title}>Create an Account</Text>
 
         <View style={styles.inputsWrapper}>
           <TextInput
             placeholder="First Name"
-            placeholderTextColor="#aaa"
+            placeholderTextColor="#999"
             value={firstName}
             onChangeText={setFirstName}
             style={styles.input}
           />
-
           <TextInput
             placeholder="Last Name"
-            placeholderTextColor="#aaa"
+            placeholderTextColor="#999"
             value={lastName}
             onChangeText={setLastName}
             style={styles.input}
           />
-
           <TextInput
             placeholder="Email"
-            placeholderTextColor="#aaa"
+            placeholderTextColor="#999"
             value={email}
             onChangeText={setEmail}
             style={styles.input}
             autoCapitalize="none"
             keyboardType="email-address"
           />
-
           <TextInput
             placeholder="Password"
-            placeholderTextColor="#aaa"
+            placeholderTextColor="#999"
             value={password}
             onChangeText={setPassword}
             style={styles.input}
@@ -97,13 +84,19 @@ const RegisterScreen = () => {
         </View>
 
         <TouchableOpacity style={styles.button} onPress={handleRegister}>
-          <Text style={styles.buttonText}>Continue</Text>
+          <Text style={styles.buttonText}>Create Account</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.loginLink}>
+            Already a member? <Text style={styles.linkBold}>Log In</Text>
+          </Text>
         </TouchableOpacity>
 
         <Text style={styles.termsText}>
-          By clicking continue, you agree to our{' '}
+          By clicking Create Account, you agree to our{' '}
           <Text style={styles.linkText}>Terms of Service</Text> and{' '}
-          <Text style={styles.linkText}>Privacy Policy</Text>
+          <Text style={styles.linkText}>Privacy Policy</Text>.
         </Text>
       </View>
     </ScrollView>
@@ -116,70 +109,56 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     backgroundColor: '#0a0a0a',
-    justifyContent: 'space-between',
-    paddingHorizontal: 24,
-    paddingTop: 40,
-    paddingBottom: 30,
-  },
-  logoContainer: {
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  logo: {
-    width: 140,
-    height: 140,
-    borderRadius: 70,
-    borderWidth: 2,
-    borderColor: '#222',
-  },
-  formContainer: {
-    justifyContent: 'center',
+    paddingHorizontal: normalize(24),
   },
   title: {
-    fontSize: 20,
+    fontSize: normalize(26),
     color: '#fff',
     textAlign: 'center',
-    fontWeight: '600',
-    marginBottom: 6,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: '#aaa',
-    textAlign: 'center',
-    marginBottom: 20,
+    fontWeight: '700',
+    marginBottom: normalize(30),
   },
   inputsWrapper: {
-    marginTop: 10,
-    gap: 12,
-    marginBottom: 20,
+    gap: normalize(14),
+    marginBottom: normalize(20),
   },
   input: {
-    backgroundColor: '#1a1a1a',
-    borderColor: '#333',
-    borderWidth: 1,
-    borderRadius: 8,
+    backgroundColor: '#1e1e1e',
+    borderRadius: normalize(10),
+    paddingVertical: normalize(12),
+    paddingHorizontal: normalize(15),
+    fontSize: normalize(16),
     color: '#fff',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    fontSize: 13,
   },
   button: {
-    backgroundColor: '#fff',
-    paddingVertical: 12,
-    borderRadius: 8,
+    backgroundColor: '#ffcc00',
+    paddingVertical: normalize(14),
+    borderRadius: normalize(10),
     alignItems: 'center',
-    marginBottom: 16,
+    marginTop: normalize(10),
+    marginBottom: normalize(20),
   },
   buttonText: {
     color: '#000',
-    fontSize: 15,
+    fontSize: normalize(17),
     fontWeight: '600',
   },
-  termsText: {
-    fontSize: 12,
-    color: '#aaa',
+  loginLink: {
     textAlign: 'center',
-    paddingHorizontal: 10,
+    color: '#ccc',
+    fontSize: normalize(15),
+  },
+  linkBold: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  termsText: {
+    fontSize: normalize(13),
+    color: '#888',
+    textAlign: 'center',
+    paddingHorizontal: normalize(16),
+    marginTop: normalize(16),
+    lineHeight: normalize(18),
   },
   linkText: {
     color: '#fff',

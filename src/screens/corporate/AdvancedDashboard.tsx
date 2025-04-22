@@ -1,22 +1,95 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Image,
+} from 'react-native';
 import BackButton from '../../components/BackButton';
+import { normalize } from '../../utils/normalize';
 
 const CorporateAdvancedDashboard = () => {
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <BackButton />
-      <Text style={styles.title}>🏢 Corporate - Advanced Level</Text>
-      <Text style={styles.content}>🔬 Training: Penetration Testing</Text>
-      <Text style={styles.content}>📘 Guide: Secure Architecture</Text>
-    </View>
+
+      <Text style={styles.topLabel}>Dashboard</Text>
+
+      <Text style={styles.title}>
+        Welcome to{'\n'}<Text style={styles.bold}>Corporate - Advanced</Text>
+      </Text>
+
+      <Text style={styles.description}>
+        Choose a section to continue your training.
+      </Text>
+
+      <TouchableOpacity style={styles.card}>
+        <Image source={require('../../assets/learn_icon.png')} style={styles.icon} />
+        <Text style={styles.cardText}>Learn</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.card}>
+        <Image source={require('../../assets/quiz_icon.png')} style={styles.icon} />
+        <Text style={styles.cardText}>Quiz</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.card}>
+        <Image source={require('../../assets/training_icon.png')} style={styles.icon} />
+        <Text style={styles.cardText}>Training</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
 export default CorporateAdvancedDashboard;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0a0a0a', padding: 20 },
-  title: { fontSize: 22, color: '#ffcc00', marginBottom: 20, fontWeight: 'bold' },
-  content: { color: '#fff', fontSize: 16, marginVertical: 10 },
+  container: {
+    padding: normalize(24),
+    backgroundColor: '#0a0a0a',
+    flexGrow: 1,
+  },
+  topLabel: {
+    color: '#888',
+    fontSize: normalize(14),
+    textAlign: 'center',
+    marginBottom: normalize(10),
+  },
+  title: {
+    fontSize: normalize(26),
+    fontWeight: '400',
+    color: '#fff',
+    textAlign: 'left',
+    marginBottom: normalize(10),
+  },
+  bold: {
+    fontWeight: '700',
+  },
+  description: {
+    color: '#aaa',
+    fontSize: normalize(14),
+    marginBottom: normalize(24),
+  },
+  card: {
+    backgroundColor: '#1c1c1e',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: normalize(18),
+    paddingHorizontal: normalize(16),
+    borderRadius: normalize(12),
+    marginBottom: normalize(20),
+  },
+  icon: {
+    width: normalize(32),
+    height: normalize(32),
+    resizeMode: 'contain',
+    marginRight: normalize(16),
+  },
+  cardText: {
+    color: '#fff',
+    fontSize: normalize(18),
+    fontWeight: '600',
+  },
 });

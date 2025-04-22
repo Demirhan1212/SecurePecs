@@ -8,16 +8,20 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { normalize } from '../utils/normalize';
 
 const FeedbackScreen = () => {
   const [message, setMessage] = useState('');
 
   const handleSubmit = async () => {
     const uid = auth().currentUser?.uid;
-    if (!uid || !message.trim()) return Alert.alert('Error', 'Please enter feedback');
+    if (!uid || !message.trim()) {
+      return Alert.alert('Oops!', 'Please write something before submitting.');
+    }
 
     try {
       await firestore().collection('feedback').add({
@@ -26,33 +30,46 @@ const FeedbackScreen = () => {
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
 
-      Alert.alert('Thank you!', 'Your feedback has been submitted.');
+      Alert.alert('Thank you! 🎉', 'Your feedback has been sent successfully.');
       setMessage('');
     } catch (error: any) {
-      Alert.alert('Submission Failed', error.message);
+      Alert.alert('Error', error.message);
     }
   };
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={styles.root}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <Text style={styles.title}>We'd love your feedback!</Text>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Feedback</Text>
+      </View>
 
-      <TextInput
-        value={message}
-        onChangeText={setMessage}
-        placeholder="Tell us what you think..."
-        placeholderTextColor="#aaa"
-        style={styles.textArea}
-        multiline
-        numberOfLines={6}
-      />
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.title}>
+          Share your thoughts{'\n'}<Text style={styles.bold}>with us!</Text>
+        </Text>
 
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
+        <Text style={styles.description}>
+          Let us know how we can improve your experience.
+        </Text>
+
+        <TextInput
+          value={message}
+          onChangeText={setMessage}
+          placeholder="Write your feedback here..."
+          placeholderTextColor="#888"
+          style={styles.textArea}
+          multiline
+          numberOfLines={6}
+          textAlignVertical="top"
+        />
+
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Send Feedback</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };
@@ -60,39 +77,57 @@ const FeedbackScreen = () => {
 export default FeedbackScreen;
 
 const styles = StyleSheet.create({
-  container: {
+  root: {
     flex: 1,
     backgroundColor: '#0a0a0a',
-    padding: 24,
-    justifyContent: 'center',
+  },
+  header: {
+    paddingTop: Platform.OS === 'ios' ? normalize(60) : normalize(30),
+    paddingBottom: normalize(10),
+    alignItems: 'center',
+  },
+  headerText: {
+    color: '#888',
+    fontSize: normalize(14),
+    fontWeight: '500',
+  },
+  container: {
+    padding: normalize(24),
+    flexGrow: 1,
   },
   title: {
-    color: '#ffcc00',
-    fontSize: 20,
-    fontWeight: '600',
-    textAlign: 'center',
-    marginBottom: 20,
+    fontSize: normalize(26),
+    fontWeight: '400',
+    color: '#fff',
+    textAlign: 'left',
+    marginBottom: normalize(10),
+  },
+  bold: {
+    fontWeight: '700',
+  },
+  description: {
+    color: '#aaa',
+    fontSize: normalize(14),
+    marginBottom: normalize(20),
   },
   textArea: {
-    backgroundColor: '#1a1a1a',
-    borderColor: '#444',
-    borderWidth: 1,
-    borderRadius: 10,
+    backgroundColor: '#1c1c1e',
+    borderRadius: normalize(10),
+    padding: normalize(14),
+    fontSize: normalize(15),
     color: '#fff',
-    padding: 14,
-    fontSize: 15,
-    textAlignVertical: 'top',
-    marginBottom: 20,
+    minHeight: normalize(120),
+    marginBottom: normalize(20),
   },
   button: {
-    backgroundColor: '#ffcc00',
-    paddingVertical: 14,
-    borderRadius: 8,
+    backgroundColor: '#ffcc00', // 💛 Sarı buton
+    paddingVertical: normalize(14),
+    borderRadius: normalize(10),
     alignItems: 'center',
   },
   buttonText: {
     color: '#000',
     fontWeight: '600',
-    fontSize: 15,
+    fontSize: normalize(16),
   },
 });
