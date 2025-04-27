@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// Ekranlar
+// SCREENS
 import AuthScreen from '../screens/WelcomeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import CreateAccountScreen from '../screens/RegisterScreen';
@@ -10,7 +10,7 @@ import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 
 import BottomTabs from './BottomTabs';
 
-// Admin özel ekranlar
+// Admin screns
 import FeedbackManagerScreen from '../screens/admin/FeedbackManagerScreen';
 import ContentManagerScreen from '../screens/admin/ContentManagerScreen';
 import QuizManagerScreen from '../screens/admin/QuizManagerScreen';
@@ -31,16 +31,16 @@ export type RootStackParamList = {
 
   BottomTabs: undefined;
 
-  // Admin yönlendirmeleri
+  // Admins
   FeedbackManager: undefined;
   ContentManager: undefined;
   QuizManager: undefined;
-  QuizEditor: undefined; // ✅ YENİ
-  trainingManager: undefined; // ✅ YENİ
-  PhishingSimulatorManager: undefined; // ✅ YENİ
-  PhishingManager: undefined; // ✅ YENİ
+  QuizEditor: undefined;
+  trainingManager: undefined; 
+  PhishingSimulatorManager: undefined;
+  PhishingManager: undefined;
 
-  // Dashboard yönlendirmeleri
+  // Dashboards
   personal_beginner: undefined;
   personal_intermediate: undefined;
   personal_advanced: undefined;
@@ -71,10 +71,10 @@ const AppNavigator = () => {
         <Stack.Screen name="PhishingSimulatorManager" component={PhishingSimulatorManager} />
         <Stack.Screen name="PhishingManager" component={PhishingManagerScreen} />
 
-        {/* 👤 Kullanıcı türü seçimi */}
+        {/* User type selec */}
 
 
-        {/* 📊 Dashboardlar */}
+        {/* Dashboards */}
         <Stack.Screen name="personal_beginner" component={require('../screens/personal/BasicDashboard').default} />
         <Stack.Screen name="personal_intermediate" component={require('../screens/personal/IntermediateDashboard').default} />
         <Stack.Screen name="personal_advanced" component={require('../screens/personal/AdvancedDashboard').default} />

@@ -17,7 +17,7 @@ const WelcomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* 🔺 ÜST: GÖRSEL */}
+      {/* Logo */}
       <View style={styles.topHalf}>
         <Image
           source={require('../assets/welcome_image.png')}
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     marginBottom: normalize(30),
   },
   loginButton: {
-    backgroundColor: '#2f89ff',
+    backgroundColor: '#ffcc00',
     borderRadius: normalize(10),
     paddingVertical: normalize(14),
     alignItems: 'center',
