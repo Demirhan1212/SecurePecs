@@ -29,8 +29,8 @@ const HomeScreen = () => {
     setUserType(type);
   };
 
-  const handleLevelSelect = (level: 'beginner' | 'intermediate' | 'advanced') => {
-    const levelKey = `${userType}_${level}`;
+  const handleLevelSelect = (selectedLevel: 'beginner' | 'intermediate' | 'advanced') => {
+    const levelKey = `${userType}_${selectedLevel}`;
     navigation.navigate('MainDashboard', { level: levelKey });
   };
 

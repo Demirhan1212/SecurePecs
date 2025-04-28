@@ -62,14 +62,14 @@ const AppNavigator = () => {
         <Stack.Screen name="BottomTabs" component={BottomTabs} />
         
 
-        {/* 🔧 Admin */}
+        {/*  Admin */}
         <Stack.Screen name="FeedbackManager" component={FeedbackManagerScreen} />
         <Stack.Screen name="ContentManager" component={ContentManagerScreen} />
         <Stack.Screen name="QuizManager" component={QuizManagerScreen} />
         <Stack.Screen name="QuizEditor" component={QuizEditorScreen} />
         <Stack.Screen name="TrainingManager" component={TrainingManagerScreen} />
         <Stack.Screen name="PhishingSimulatorManager" component={PhishingSimulatorManager} />
-        <Stack.Screen name="PhishingManager" component={PhishingManagerScreen} />
+        
 
         {/* User type selec */}
 

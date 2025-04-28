@@ -115,7 +115,7 @@ const PhishingSimulatorManager = () => {
 
 export default PhishingSimulatorManager;
 
-// STYLES (QuizManagerScreen'den uyarladım senin için.)
+// STYLES
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: '#0a0a0a' },
   container: { paddingHorizontal: normalize(24), paddingTop: normalize(20) },
@@ -132,6 +132,11 @@ const styles = StyleSheet.create({
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'center', padding: normalize(20) },
   modalBox: { backgroundColor: '#1f1f1f', borderRadius: normalize(12), padding: normalize(20) },
   modalHeader: { fontSize: normalize(18), color: '#fff', fontWeight: '700', marginBottom: normalize(12), textAlign: 'center' },
-  modalCancel: { marginTop: normalize(10), backgroundColor: '#888', padding: normalize(10), borderRadius: normalize(8) },
-  modalCancelText: { textAlign: 'center', color: '#fff', fontWeight: '600' },
+  modalCancel: { marginTop: normalize(10),
+    backgroundColor: '#888',
+    padding: normalize(10),
+    borderRadius: normalize(8) },
+  modalCancelText: { textAlign: 'center',
+    color: '#fff',
+    fontWeight: '600' },
 });

@@ -24,11 +24,11 @@ export type HomeStackParamList = {
   LearnScreen: { level: string };
   LearnDetailScreen: { id: string; title: string; content: string };
   QuizScreen: { level: string };
-  QuizDetailScreen: { level: string }; // ✅ EKLENDİ
+  QuizDetailScreen: { level: string };
   TrainingScreen: { level: string };
   PhishingSimulatorScreen: { level: string };
 
-  // 🔒 Eski dashboard rotaları (artık kullanılmıyor ama korunuyor)
+  //  Old versions
   // personal_basic: undefined;
   // personal_intermediate: undefined;
   // personal_advanced: undefined;
@@ -51,10 +51,10 @@ const HomeStack = () => {
       <Stack.Screen name="TrainingScreen" component={TrainingScreen} />
       <Stack.Screen name="PhishingSimulatorScreen" component={PhishingSimulatorScreen} />
 
-      {/* Diğer ekranlar */}
+      {/* Other screens */}
       {/* <Stack.Screen name="PasswordPuzzleScreen" component={PasswordPuzzleScreen} /> */}
 
-      {/* Eski dashboard rotaları (artık kullanılmıyor ama korunuyor) */}
+      {/* Old version dashboards) */}
 
       {/*
       <Stack.Screen name="personal_basic" component={PersonalBasicDashboard} />
