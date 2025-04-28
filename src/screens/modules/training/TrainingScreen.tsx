@@ -22,10 +22,6 @@ const TrainingScreen = () => {
       name: 'Phishing Simulator',
       key: 'PhishingSimulator',
     },
-    {
-      name: 'Password Puzzle',
-      key: 'PasswordPuzzle',
-    },
   ];
 
   return (
