@@ -45,7 +45,7 @@ const PhishingSimulatorScreen = () => {
           setQuestions(snapshot.docs.map(doc => doc.data()));
         }
       } catch (err) {
-        console.error('🔥 Firebase Fetch Error:', err);
+        console.error(' Firebase Fetch Error:', err);
       } finally {
         setLoading(false);
       }

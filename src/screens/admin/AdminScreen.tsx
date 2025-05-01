@@ -98,12 +98,6 @@ const AdminScreen = () => {
                   <Text style={styles.subSubButtonText}>🐟 Phishing Simulator</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                  style={styles.subSubButton}
-                  onPress={() => navigation.navigate('PasswordPuzzleManager' as never)}
-                >
-                  <Text style={styles.subSubButtonText}>🔑 Password Puzzle</Text>
-                </TouchableOpacity>
               </>
             )}
           </View>

@@ -36,7 +36,7 @@ export type RootStackParamList = {
   ContentManager: undefined;
   QuizManager: undefined;
   QuizEditor: undefined;
-  trainingManager: undefined; 
+  trainingManager: undefined;
   PhishingSimulatorManager: undefined;
   PhishingManager: undefined;
 
@@ -69,6 +69,9 @@ const AppNavigator = () => {
         <Stack.Screen name="QuizEditor" component={QuizEditorScreen} />
         <Stack.Screen name="TrainingManager" component={TrainingManagerScreen} />
         <Stack.Screen name="PhishingSimulatorManager" component={PhishingSimulatorManager} />
+        <Stack.Screen name="PhishingManager" component={PhishingManagerScreen} />
+
+        {/* User type selection */}
         
 
         {/* User type selec */}
