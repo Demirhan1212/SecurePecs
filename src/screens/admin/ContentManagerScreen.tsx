@@ -16,7 +16,7 @@ import { normalize } from '../../utils/normalize';
 import BackButton from '../../components/BackButton';
 import QuestionForm from '../../components/QuestionForm';
 
-// Reusing QuestionForm for editing module content isn't ideal; consider creating ModuleForm for better UX
+
 
 type Module = {
   id: string;
@@ -63,7 +63,7 @@ const ContentManagerScreen = () => {
     return () => unsub();
   }, []);
 
-  // when module selected, populate form
+
   useEffect(() => {
     if (selectedModule) {
       setFormTitle(selectedModule.title);
